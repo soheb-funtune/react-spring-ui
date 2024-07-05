@@ -2,22 +2,32 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { TextField, Button, Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost } from "../../state/movieSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { createPosts, editPosts } from "../../state/postSlice";
 
 const AddPost = () => {
+  const location = useLocation();
+  const editPost = location.state?.post;
+  console.log({ editPost });
   const { userDetails } = useSelector((state) => state.movieSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit, errors, setValue } = useForm({
     defaultValues: {
-      title: "",
-      content: "",
+      title: editPost?.title || "",
+      content: editPost?.content || "",
     },
   });
   const onSubmit = (data) => {
     console.log(data);
-    dispatch(addPost({ ...data, user: userDetails?.userId }));
+    if (editPost) {
+      dispatch(
+        editPosts({ ...data, postId: editPost?.postId, userId: editPost?.id })
+      );
+      navigate("/posts-page");
+    } else {
+      dispatch(createPosts({ ...data, userId: userDetails?.userId }));
+    }
   };
 
   return (
@@ -40,7 +50,7 @@ const AddPost = () => {
           margin: "0 auto",
         }}
       >
-        <h1>Add Post</h1>
+        <h1>{editPost ? "Edit" : "Add"} Post</h1>
         <TextField
           {...register("title", { required: true })}
           label="Title"
@@ -57,7 +67,7 @@ const AddPost = () => {
           error={errors?.content}
         />
         <Button type="submit" variant="contained" color="primary">
-          Create Post
+          {editPost ? "Edit" : "Create"} Post
         </Button>
       </Box>
     </Box>

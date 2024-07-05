@@ -75,7 +75,9 @@ export const deleteUserAPI = async (id) => {
   }
 };
 
-export const addPostAPI = async (dataObj) => {
+// ******************* POSTS API ***********************
+
+const createPostAPI = async (dataObj) => {
   try {
     const response = await fetch("http://localhost:8081/api/posts", {
       method: "POST",
@@ -97,3 +99,70 @@ export const addPostAPI = async (dataObj) => {
     throw error;
   }
 };
+const getAllPostsAPI = async () => {
+  try {
+    const response = await fetch("http://localhost:8081/api/posts", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error in userSignInAPI:", error);
+    throw error;
+  }
+};
+const deletePostsAPI = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:8081/api/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error in userSignInAPI:", error);
+    throw error;
+  }
+};
+const editPostsAPI = async (dataObje) => {
+  const { postId, ...rest } = dataObje;
+  try {
+    const response = await fetch(`http://localhost:8081/api/posts/${postId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rest),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error in editPostsAPI:", error);
+    throw error;
+  }
+};
+
+export default { createPostAPI, getAllPostsAPI, deletePostsAPI, editPostsAPI };

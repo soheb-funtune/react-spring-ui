@@ -1,12 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchgenres, fetchMovies, fetchSingleMovie } from "../API/movie-apis";
 
-import {
-  userSignInAPI,
-  updateUserAPI,
-  deleteUserAPI,
-  addPostAPI,
-} from "../API/spring-api";
+import { userSignInAPI, updateUserAPI, deleteUserAPI } from "../API/spring-api";
 
 const initialState = {
   value: 2003,
@@ -16,7 +11,7 @@ const initialState = {
   genres: null,
   selectedGenre: null,
   userDetails: {
-    userId:1
+    userId: 1,
   },
 };
 
@@ -153,13 +148,6 @@ export const updateUser = createAsyncThunk("updateUser", async (obj) => {
 export const deleteUser = createAsyncThunk("deleteUser", async (id) => {
   console.log("Delete User in slice", id);
   const responce = await deleteUserAPI(id);
-  console.log(responce);
-  return responce;
-});
-
-// posts
-export const addPost = createAsyncThunk("addPost", async (data) => {
-  const responce = await addPostAPI(data);
   console.log(responce);
   return responce;
 });

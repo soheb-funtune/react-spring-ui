@@ -124,21 +124,35 @@ const Header = ({ handleDrawerOpen, handleDrawerClose, open }) => {
           Corporate Partners
         </Link>
         <RRDLink
-          to={"/add-post"}
+          to={"/posts-page"}
           sx={{
-            ...bottomBarCss,
+            textDecoration: "none !important",
           }}
         >
-          Add Post
+          <Box
+            component={"span"}
+            sx={{
+              ...bottomBarCss,
+            }}
+          >
+            Posts
+          </Box>
         </RRDLink>
-        
+
         <RRDLink
           to={"/user-operations"}
           sx={{
-            ...bottomBarCss,
+            textDecoration: "none",
           }}
         >
-          User
+          <Box
+            component={"span"}
+            sx={{
+              ...bottomBarCss,
+            }}
+          >
+            User
+          </Box>
         </RRDLink>
       </Box>
     </Toolbar>
