@@ -17,7 +17,7 @@ const PostsPage = () => {
     } else {
       navigate("/sign-in");
     }
-  }, [userDetails?.userId]);
+  }, [userDetails?.userId, navigate]);
 
   useEffect(() => {
     dispatch(getAllPosts());

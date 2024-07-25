@@ -10,8 +10,9 @@ const initialState = {
   movieDetails: null,
   genres: null,
   selectedGenre: null,
+  userDetailsGoogleAuth: null,
   userDetails: {
-    userId: 1,
+    userId: null,
   },
 };
 
@@ -19,6 +20,10 @@ export const movieSlice = createSlice({
   name: "movie",
   initialState,
   reducers: {
+    setGooglAuthDetails: (state, action) => {
+      console.log("userDetailsGoogleAuth", action.payload);
+      state.userDetailsGoogleAuth = action.payload;
+    },
     setSelectedGenre: (state, action) => {
       console.log("setSelectedGenre", action.payload);
       state.selectedGenre = action.payload;
@@ -77,7 +82,7 @@ export const movieSlice = createSlice({
       })
       .addCase(userSignIn.fulfilled, (state, action) => {
         console.log("user fetched successfully:", action.payload); // Debugging message
-        state.userDetails = action.payload;
+        state.userDetails = { ...action.payload, userId: action.payload._Id };
         state.status = "succeeded";
       })
       .addCase(userSignIn.rejected, (state) => {
@@ -115,6 +120,7 @@ export const {
   incrementByAmount,
   setSelectedGenre,
   // setUserDetails,
+  setGooglAuthDetails,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

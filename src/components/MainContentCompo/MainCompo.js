@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Box, Typography, Rating } from "@mui/material";
-import MainContent from "../MainContent";
-import FeaturedCompanies from "../FeaturedCompanies";
-import Pagination from "../Pagination";
-import { fetchAllMovies } from "../../API/movie-apis";
 import StarIcon from "@mui/icons-material/Star";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getMovie } from "../../state/movieSlice";
 
 export const MainCompo = ({ open }) => {
   const [allMovies, setAllMovies] = useState([]);

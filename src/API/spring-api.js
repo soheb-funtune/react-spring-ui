@@ -9,7 +9,7 @@ const options = {
 
 export const userSignInAPI = async (dataObj) => {
   try {
-    const response = await fetch("http://localhost:8080/api/users", {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}users`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -32,14 +32,17 @@ export const userSignInAPI = async (dataObj) => {
 export const updateUserAPI = async (dataObj, id) => {
   console.log("updateUserAPI", dataObj, id);
   try {
-    const response = await fetch(`http://localhost:8080/api/users/${id}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataObj),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}users/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataObj),
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -55,13 +58,16 @@ export const updateUserAPI = async (dataObj, id) => {
 export const deleteUserAPI = async (id) => {
   console.log("deleteUserAPI", id);
   try {
-    const response = await fetch(`http://localhost:8080/api/users/${id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}users/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -79,7 +85,7 @@ export const deleteUserAPI = async (id) => {
 
 const createPostAPI = async (dataObj) => {
   try {
-    const response = await fetch("http://localhost:8081/api/posts", {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}posts`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -101,7 +107,7 @@ const createPostAPI = async (dataObj) => {
 };
 const getAllPostsAPI = async () => {
   try {
-    const response = await fetch("http://localhost:8081/api/posts", {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}posts`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -122,13 +128,16 @@ const getAllPostsAPI = async () => {
 };
 const deletePostsAPI = async (id) => {
   try {
-    const response = await fetch(`http://localhost:8081/api/posts/${id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}posts/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -144,14 +153,17 @@ const deletePostsAPI = async (id) => {
 const editPostsAPI = async (dataObje) => {
   const { postId, ...rest } = dataObje;
   try {
-    const response = await fetch(`http://localhost:8081/api/posts/${postId}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(rest),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}posts/${postId}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rest),
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { TextField, Button, Box } from "@mui/material";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ export const User = () => {
   const { userDetails } = useSelector((state) => state.movieSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit, errors, reset, setValue } = useForm({
+  const { register, handleSubmit, errors, reset } = useForm({
     defaultValues: {
       username: userDetails?.username,
       email: userDetails?.email,

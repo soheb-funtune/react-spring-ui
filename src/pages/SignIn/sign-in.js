@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { TextField, Button, Box } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { userSignIn } from "../../state/movieSlice";
+import { setGooglAuthDetails, userSignIn } from "../../state/movieSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 const SignIn = () => {
   const { userDetails } = useSelector((state) => state.movieSlice);
@@ -27,6 +29,55 @@ const SignIn = () => {
     console.log(data);
     dispatch(userSignIn(data));
   };
+
+  const handleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log("Google token response:", tokenResponse);
+      try {
+        // Request the ID token
+        const { data } = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+
+        console.log("Google user info:", data);
+
+        // Send the ID token to your backend
+        const response = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}auth/google_login`,
+          {
+            token: data.sub, // Use the 'sub' field as the ID token
+          }
+        );
+
+        console.log("Backend response:", response.data);
+
+        // Store the JWT token
+        localStorage.setItem("token", response.data.access_token);
+        dispatch(
+          setGooglAuthDetails({ ...data, token: response.data.access_token })
+        );
+      } catch (error) {
+        console.error("Error during login:", error);
+        if (error.response) {
+          console.error("Error data:", error.response.data);
+          console.error("Error status:", error.response.status);
+          console.error("Error headers:", error.response.headers);
+        } else if (error.request) {
+          console.error("Error request:", error.request);
+        } else {
+          console.error("Error message:", error.message);
+        }
+      }
+    },
+    onError: (error) => {
+      console.log("Login Failed:", error);
+    },
+  });
 
   return (
     <Box
@@ -66,6 +117,20 @@ const SignIn = () => {
         />
         <Button type="submit" variant="contained" color="primary">
           Submit
+        </Button>
+        {/* <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+            let decodedData = jwtDecode(credentialResponse?.credential);
+            console.log(decodedData);
+            dispatch(setGooglAuthDetails({ decodedData, credentialResponse }));
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        /> */}
+        <Button onClick={() => handleLogin()} variant="contained">
+          Login with Google
         </Button>
       </Box>
     </Box>

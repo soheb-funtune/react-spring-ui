@@ -12,8 +12,8 @@ const options = {
 export const fetchMovies = async (genres) => {
   const response = await fetch(
     genres
-      ? `https://api.themoviedb.org/3/movie/${genres}/similar?api_key=4045f72ba05f7bac14ac82492309e18c`
-      : "https://api.themoviedb.org/3/discover/movie?api_key=4045f72ba05f7bac14ac82492309e18c",
+      ? `${process.env.REACT_APP_MOVIE_API_BASE_URL}3/movie/${genres}/similar?api_key=4045f72ba05f7bac14ac82492309e18c`
+      : `${process.env.REACT_APP_MOVIE_API_BASE_URL}3/discover/movie?api_key=4045f72ba05f7bac14ac82492309e18c`,
     options
   );
   const data = await response.json();
@@ -22,7 +22,7 @@ export const fetchMovies = async (genres) => {
 export const fetchSingleMovie = async (id) => {
   console.log({ fetchSingleMovie });
   const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=4045f72ba05f7bac14ac82492309e18c`,
+    `${process.env.REACT_APP_MOVIE_API_BASE_URL}3/movie/${id}?api_key=4045f72ba05f7bac14ac82492309e18c`,
     options
   );
   const data = await response.json();
@@ -30,7 +30,7 @@ export const fetchSingleMovie = async (id) => {
 };
 export const fetchgenres = async () => {
   const response = await fetch(
-    "https://api.themoviedb.org/3/genre/movie/list?api_key=4045f72ba05f7bac14ac82492309e18c",
+    `${process.env.REACT_APP_MOVIE_API_BASE_URL}3/genre/movie/list?api_key=4045f72ba05f7bac14ac82492309e18c`,
     options
   );
   const data = await response.json();

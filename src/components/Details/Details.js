@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchMovie } from "../../API/movie-apis";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovie } from "../../state/movieSlice";
 import { Box, Container, Grid, Typography } from "@mui/material";

@@ -4,8 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useMediaQuery, useTheme } from "@mui/material";
 
-import { AppBar, Toolbar, Typography, Link, Button, Box } from "@mui/material";
-import { Image } from "@mui/icons-material";
+import { Toolbar, Link, Box } from "@mui/material";
 import { Link as RRDLink } from "react-router-dom";
 
 const Header = ({ handleDrawerOpen, handleDrawerClose, open }) => {

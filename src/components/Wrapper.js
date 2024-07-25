@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+// import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 
 export const Wrapper = ({ children }) => {
-  const navigate = useNavigate();
-  const { userDetails } = useSelector((state) => state.movieSlice);
+  // const navigate = useNavigate();
+  // const { userDetails } = useSelector((state) => state.movieSlice);
 
   //   useEffect(() => {
   //     if (!userDetails?.useId) {
